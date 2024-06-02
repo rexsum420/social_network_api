@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+from django.utils import timezone
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,13 +37,30 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_authtoken',
+    'users',
+    'direct',
+    'board',
+    'logs',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_authtoken.auth.AuthTokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'social_network.middleware.UserActivityLoggingMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -121,3 +138,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+REGISTRATION_ENABLED = True
+
+REGISTRATION_EMAIL_CONFIRM = True
+REGISTRATION_EMAIL_CONFIRM_MODEL_FIELD = 'email_confirmed'
+REGISTRATION_EMAIL_CONFIRM_TOKEN_VALIDITY = timezone.timedelta(days=1)
+REGISTRATION_EMAIL = {
+    'BASE_URL': 'https://your-super-service.example.org',  # without trailing slash
+    'FROM': 'noreply@example.org',
+    'SUBJECT': 'Confirm your email address for FOOBAR',
+    'MESSAGE': '''Hello {username},
+    please visit the following link to confirm your email address: {url}
+    ''',
+}
