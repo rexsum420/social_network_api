@@ -10,3 +10,6 @@ class UserViewSet(AdminOnlyMixin, viewsets.ModelViewSet):
     """
     serializer_class = UserSerializer
     queryset = CustomUser.objects.all()
+    
+    def perform_create(self, serializer):
+        serializer.save()

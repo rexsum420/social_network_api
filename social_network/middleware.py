@@ -7,5 +7,12 @@ class UserActivityLoggingMiddleware(MiddlewareMixin):
         if request.user.is_authenticated:
             if request.path == '/api-token-auth/' and request.method == 'POST':
                 UserLog.objects.create(user=request.user, action='Logged in', timestamp=datetime.now())
+                self.update_ip_address(request)
             elif request.path == '/logout/':
                 UserLog.objects.create(user=request.user, action='Logged out', timestamp=datetime.now())
+
+    def update_ip_address(self, request):
+        ip_address = request.META.get('REMOTE_ADDR')
+        if ip_address and request.user.ip_address != ip_address:
+            request.user.ip_address = ip_address
+            request.user.save()

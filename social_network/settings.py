@@ -143,14 +143,14 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 REGISTRATION_ENABLED = True
 
-REGISTRATION_EMAIL_CONFIRM = True
-REGISTRATION_EMAIL_CONFIRM_MODEL_FIELD = 'email_confirmed'
-REGISTRATION_EMAIL_CONFIRM_TOKEN_VALIDITY = timezone.timedelta(days=1)
-REGISTRATION_EMAIL = {
-    'BASE_URL': 'https://your-super-service.example.org',  # without trailing slash
-    'FROM': 'noreply@example.org',
-    'SUBJECT': 'Confirm your email address for FOOBAR',
-    'MESSAGE': '''Hello {username},
-    please visit the following link to confirm your email address: {url}
-    ''',
-}
+# REGISTRATION_EMAIL_CONFIRM = True
+# REGISTRATION_EMAIL_CONFIRM_MODEL_FIELD = 'email_confirmed'
+# REGISTRATION_EMAIL_CONFIRM_TOKEN_VALIDITY = timezone.timedelta(days=1)
+# REGISTRATION_EMAIL = {
+#     'BASE_URL': 'https://your-super-service.example.org',  # without trailing slash
+#     'FROM': 'noreply@example.org',
+#     'SUBJECT': 'Confirm your email address for FOOBAR',
+#     'MESSAGE': '''Hello {username},
+#     please visit the following link to confirm your email address: {url}
+#     ''',
+# }
