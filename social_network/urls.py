@@ -6,9 +6,9 @@ from board.views import BoardMessageViewSet
 from logs.views import UserLogViewSet
 
 router = DefaultRouter()
-router.register(r'direct', DirectMessageViewSet)
-router.register(r'board', BoardMessageViewSet)
-router.register(r'logs', UserLogViewSet)
+router.register(r'direct', DirectMessageViewSet, basename='dm')
+router.register(r'board', BoardMessageViewSet, basename='chat')
+router.register(r'logs', UserLogViewSet, basename='log')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
