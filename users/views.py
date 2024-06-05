@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .models import CustomUser
 from .serializers import UserSerializer
 from .permissions import AdminOnlyMixin
+from rest_framework.authentication import TokenAuthentication
 
 class UserViewSet(AdminOnlyMixin, viewsets.ModelViewSet):
     """
