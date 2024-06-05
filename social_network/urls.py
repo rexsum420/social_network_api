@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from direct.views import DirectMessageViewSet
 from board.views import BoardMessageViewSet
 from logs.views import UserLogViewSet
+from rest_framework.authtoken.views import ObtainAuthToken
 
 router = DefaultRouter()
 router.register(r'direct', DirectMessageViewSet, basename='dm')
@@ -14,5 +15,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('users/', include('users.urls')),
-    path('auth/', include('rest_authtoken.urls')),
+    path('auth/', ObtainAuthToken.as_view()),
 ]
