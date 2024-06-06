@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'direct',
     'board',
     'logs',
+    'channels',
 ]
 
 REST_FRAMEWORK = {
@@ -85,7 +86,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'social_network.wsgi.application'
-
+ASGI_APPLICATION = 'social_network.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
