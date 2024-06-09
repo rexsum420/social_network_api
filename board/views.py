@@ -1,9 +1,24 @@
 from rest_framework import viewsets
-from .models import BoardMessage
-from .serializers import BoardMessageSerializer, CreateBoardMessageSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from .models import Board, BoardMessage
+from .serializers import BoardMessageSerializer, CreateBoardMessageSerializer, BoardCreateSerializer, BoardReadOnlySerializer
 from logs.models import UserLog
 from social_network.permissions import ReadAndCreateOnlyMixin
-from rest_framework.authentication import TokenAuthentication
+
+class BoardViewSet(viewsets.ModelViewSet):
+    queryset = Board.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return BoardCreateSerializer
+        return BoardReadOnlySerializer
+
+    def perform_create(self, serializer):
+        serializer.save(admin=self.request.user)
+        UserLog.objects.create(user=self.request.user, action='Created a new board')
 
 class BoardMessageViewSet(ReadAndCreateOnlyMixin, viewsets.ModelViewSet):
     queryset = BoardMessage.objects.all()
