@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ia0j=r5)$z&wxv=0e7h!x=@q+d%pc=3-px040jt(8a$9@)cf5s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -158,3 +158,8 @@ REGISTRATION_ENABLED = True
 #     please visit the following link to confirm your email address: {url}
 #     ''',
 # }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_network.authentication.UsernameOrEmailBackend', 
+]

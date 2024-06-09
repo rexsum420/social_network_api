@@ -13,10 +13,10 @@ class DirectMessageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_sender(self, obj):
-        return obj.sender.user.username
+        return obj.sender.username
 
     def get_receiver(self, obj):
-        return obj.receiver.user.username
+        return obj.receiver.username
 
 User = get_user_model()
 

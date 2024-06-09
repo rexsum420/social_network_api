@@ -3,11 +3,15 @@ from django.db import models
 from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from social_network.utils import trim_and_case  # Import the function
 
 class CustomUserManager(BaseUserManager):
-    def get_by_natural_key(self, username):
-        username_attr = '{}__iexact'.format(self.model.USERNAME_FIELD)
-        return self.get(**{username_attr: username})
+    def get_by_natural_key(self, username_or_email):
+        normalized_input = trim_and_case(username_or_email)
+        try:
+            return self.get(username__iexact=normalized_input)
+        except self.model.DoesNotExist:
+            return self.get(email__iexact=normalized_input)
 
     def create_user(self, email, username, password=None, **extra_fields):
         if not email:
@@ -40,8 +44,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return self.username
