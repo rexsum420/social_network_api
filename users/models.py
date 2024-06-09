@@ -3,7 +3,7 @@ from django.db import models
 from rest_framework.authtoken.models import Token
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from social_network.utils import trim_and_case  # Import the function
+from social_network.utils import trim_and_case
 
 class CustomUserManager(BaseUserManager):
     def get_by_natural_key(self, username_or_email):
@@ -41,6 +41,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     email_confirmed = models.BooleanField(default=False)
+    last_active = models.CharField(default=".", max_length=512)
 
     objects = CustomUserManager()
 

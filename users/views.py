@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from .models import CustomUser
 from .serializers import UserSerializer
 from .permissions import AdminOnlyMixin
+from django.utils import timezone
+from rest_framework.decorators import api_view
 
 class UserViewSet(AdminOnlyMixin, viewsets.ModelViewSet):
     """
@@ -37,3 +39,10 @@ class UserViewSet(AdminOnlyMixin, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save()
+
+@api_view(['GET'])
+def active(request, mins=5):
+    five_minutes_ago = timezone.now() - timezone.timedelta(minutes=mins)
+    active_users = CustomUser.objects.filter(last_active__gte=five_minutes_ago)
+    data = [user.username for user in active_users]  # You can adjust this to include other fields if needed
+    return Response({'active_users': data})

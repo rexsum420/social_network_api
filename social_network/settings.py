@@ -86,7 +86,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'social_network.wsgi.application'
-ASGI_APPLICATION = 'social_network.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -158,8 +157,3 @@ REGISTRATION_ENABLED = True
 #     please visit the following link to confirm your email address: {url}
 #     ''',
 # }
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'social_network.authentication.UsernameOrEmailBackend', 
-]
